@@ -43,7 +43,20 @@
             get
             {
                 return downloadCommand ?? (downloadCommand = new Command(
-                    async obj => await DownLoad()));
+                    async obj =>
+                    {
+                        var resultWork = await Work();
+                        if (resultWork == 100)
+                        {
+                            Dispatcher.StatusName = "Обучение завершено";
+                            Dispatcher.ProgressValue = 100;
+                        }
+                        else
+                        {
+                            Dispatcher.StatusName = "Обучение отменено";
+                            Dispatcher.ProgressValue = 0;
+                        }
+                    }));
             }
         }
 
@@ -94,6 +107,32 @@
                             url,
                             $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\Установщик телеги.exe");
                     }
+                });
+        }
+
+        /// <summary>
+        /// Метод имитирующий работу.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<int> Work()
+        {
+            cancelTokenSource = new CancellationTokenSource();
+            var token = cancelTokenSource.Token;
+
+            return await Task.Run(
+                () =>
+                {
+                    for (var i = 0; i < 100; i++)
+                    {
+                        if (token.IsCancellationRequested)
+                            return 0;
+
+                        Dispatcher.StatusName = $"Обучение искуственного интеллекта {i}%";
+                        Dispatcher.ProgressValue++;
+                        Thread.Sleep(50);
+                    }
+
+                    return 100;
                 });
         }
     }

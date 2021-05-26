@@ -14,7 +14,7 @@
             <TextBlock Text="{Binding Dispatcher.StatusName}" DockPanel.Dock="Top" TextAlignment="Center" Margin="15" />
             <DockPanel DockPanel.Dock="Bottom" Width="400" Margin=" 0 0 0 20">
                 <Button Command="{Binding DownLoadCommand}" CommandParameter="{Binding ElementName=progress}"
-                        DockPanel.Dock="Left" Content="Скачать" Style="{StaticResource buttun_default}" />
+                        DockPanel.Dock="Left" Content="Начать" Style="{StaticResource buttun_default}" />
                 <Button Command="{Binding СancelCommand}" DockPanel.Dock="Right" Content="Отмена"
                         Style="{StaticResource buttun_default}" />
                 <Button Visibility="Hidden" />
